@@ -1,6 +1,6 @@
 {
     "name": "mariproject",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": "Lilbaek",
     "description": "Small electron app that allows for integration between MARIProject and Toggl.",
     "main": "main.js",
