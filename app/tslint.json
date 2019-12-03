@@ -6,7 +6,6 @@
         "rxjs-tslint-rules"
     ],
     "rules": {
-        "rxjs-no-ignored-subscription": { "severity": "error" },
         "arrow-return-shorthand": true,
         "callable-types": true,
         "class-name": true,

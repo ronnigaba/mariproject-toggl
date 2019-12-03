@@ -14,7 +14,7 @@ import {SharedModule} from './shared/shared.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {SetupComponent} from './components/setup/setup.component';
-import {HomeComponent} from './components/home/home.component';
+import {RegistrationComponent} from './components/registration/registration.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
@@ -29,7 +29,7 @@ import {MatChipsModule} from '@angular/material/chips';
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: RegistrationComponent
     },
     {
         path: 'projects',
@@ -52,7 +52,7 @@ const routes: Routes = [
     declarations: [
         AppComponent,
         SetupComponent,
-        HomeComponent,
+        RegistrationComponent,
         ProjectsComponent
     ],
     imports: [

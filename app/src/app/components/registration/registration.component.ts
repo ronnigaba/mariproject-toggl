@@ -6,11 +6,11 @@ import {SettingsService} from '../../services/settings.service';
 import {TogglService} from '../../services/toggl.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    selector: 'app-registration',
+    templateUrl: './registration.component.html',
+    styleUrls: ['./registration.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
     public dataSource: any;
     displayedColumns: string[] = ['checked', 'project', 'description', 'durationDisplay'];
     public dateSelection: Date = new Date();
@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
     public async ngOnInit(): Promise<void> {
         if(!this.settingsService.isSettingsSet()) {
             await this.router.navigate(['setup']);
+        } else {
+            await this.loadTimeRegistrations();
         }
     }
 
@@ -46,7 +48,6 @@ export class HomeComponent implements OnInit {
                     const data = match.name.substring(startSubstring, endSubstring);
                     if (data && data.length > 0) {
                         const splitData = data.split('|');
-                        console.log('x');
                         if (splitData.length === 3) {
                             projectId = splitData[0];
                             contractId = splitData[1];
