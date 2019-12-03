@@ -32,7 +32,7 @@ export class MariProjectService {
     }
 
     private async login(): Promise<string> {
-        if(this.cachedSessionId && this.cacheExpiration > Date.now()) {
+        if (this.cachedSessionId && this.cacheExpiration > Date.now()) {
             return this.cachedSessionId;
         }
         if (!this.client) {

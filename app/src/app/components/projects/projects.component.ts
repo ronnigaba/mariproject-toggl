@@ -22,8 +22,9 @@ export class ProjectsComponent implements OnInit {
     }
 
     public async ngOnInit(): Promise<void> {
-        if(!this.settingsService.isSettingsSet()) {
+        if (!this.settingsService.isSettingsSet()) {
             await this.router.navigate(['setup']);
+            return;
         }
         try {
             const response = await this.mariProjectService.getListProjectsForTimeBooking();
@@ -34,12 +35,11 @@ export class ProjectsComponent implements OnInit {
                 });
             });
         } catch (e) {
+            console.log(e);
             this.snackBar.open('Error loading projects: ' + e.status, 'Close', {
                 duration: 20000,
             });
         }
-        // const response4 = await this.mariProjectService.timeKeepingImport('PD100153', '102901', '111487');
-        // console.log(response4);
     }
 
     public async onProjectChanged(): Promise<void> {
@@ -54,6 +54,7 @@ export class ProjectsComponent implements OnInit {
                 });
             });
         } catch (e) {
+            console.log(e);
             this.snackBar.open('Error loading contracts: ' + e.status, 'Close', {
                 duration: 20000,
             });
@@ -71,6 +72,7 @@ export class ProjectsComponent implements OnInit {
                 });
             });
         } catch (e) {
+            console.log(e);
             this.snackBar.open('Error loading positions: ' + e.status, 'Close', {
                 duration: 20000,
             });
@@ -97,7 +99,7 @@ export class ProjectsComponent implements OnInit {
                 duration: 5000,
             });
         } catch (e) {
-            if(e.error && e.error.includes("has already been taken")) {
+            if (e.error && e.error.includes('has already been taken')) {
                 this.snackBar.open('Project already exist', 'Close', {
                     duration: 5000,
                 });

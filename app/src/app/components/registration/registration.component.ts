@@ -12,14 +12,14 @@ import {TogglService} from '../../services/toggl.service';
 })
 export class RegistrationComponent implements OnInit {
     public dataSource: any;
-    displayedColumns: string[] = ['checked', 'project', 'description', 'durationDisplay'];
+    public displayedColumns: string[] = ['checked', 'project', 'description', 'durationDisplay'];
     public dateSelection: Date = new Date();
 
     constructor(private settingsService: SettingsService, private togglService: TogglService, private mariProjectService: MariProjectService, private snackBar: MatSnackBar, private router: Router) {
     }
 
     public async ngOnInit(): Promise<void> {
-        if(!this.settingsService.isSettingsSet()) {
+        if (!this.settingsService.isSettingsSet()) {
             await this.router.navigate(['setup']);
         } else {
             await this.loadTimeRegistrations();
@@ -39,9 +39,9 @@ export class RegistrationComponent implements OnInit {
             this.dataSource = [];
             this.dataSource = (await this.togglService.timeEntriesForDay(this.dateSelection)).map((x: any) => {
                 const match = projects.find(y => y.id === x.pid);
-                let projectId = undefined;
-                let contractId = undefined;
-                let positionId = undefined;
+                let projectId;
+                let contractId;
+                let positionId;
                 if (match.name.includes('[') && match.name.includes(']'))  {
                     const startSubstring = match.name.lastIndexOf('[') + 1;
                     const endSubstring = match.name.lastIndexOf(']');
@@ -98,7 +98,7 @@ export class RegistrationComponent implements OnInit {
                     entry.description ? entry.description : ''
                 );
                 console.log(response);
-                if(response.result.MARITimeKeepingImportResult.ErrorText) {
+                if (response.result.MARITimeKeepingImportResult.ErrorText) {
                     //Could not import :(
                     importedAll = false;
                     console.log(response.result.MARITimeKeepingImportResult.ErrorText);
@@ -108,7 +108,7 @@ export class RegistrationComponent implements OnInit {
             }
         }
         await this.loadTimeRegistrations();
-        if(importedAll) {
+        if (importedAll) {
             this.snackBar.open('Entries was created', 'Close', {
                 duration: 2000,
             });

@@ -1,5 +1,5 @@
 {
-    "name": "angular-electron",
+    "name": "mariproject-integration",
     "main": "main.js",
     "private": true,
     "scripts": {

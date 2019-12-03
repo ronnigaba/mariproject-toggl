@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 const electron = require('electron');
 const path = require('path');
@@ -12,12 +12,9 @@ export class SettingsService {
     private data: any;
 
     constructor() {
-        // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
-        // app.getPath('userData') will return a string of the user's app data directory path.
         const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-        // We'll use the `configName` property to set the file name and path.join to bring it all together as a string
+        console.log(userDataPath);
         this.path = path.join(userDataPath, 'mariproject.json');
-
         this.data = this.parseDataFile(this.path, {});
     }
 
@@ -65,11 +62,11 @@ export class SettingsService {
         return this.togglApi && this.mariUsername && this.mariPassword && this.mariServer && this.mariEmployeeNumber;
     }
 
-    private get(key: string) {
+    private get(key: string): any {
         return this.data[key];
     }
 
-    private set(key: string, val: string) {
+    private set(key: string, val: string): void {
         this.data[key] = val;
         fs.writeFileSync(this.path, JSON.stringify(this.data));
     }

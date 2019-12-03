@@ -21,7 +21,7 @@ export class SetupComponent implements OnInit, AfterViewInit {
 
     public ngOnInit(): void {
         this.apiKeyValue = this.settingsService.togglApi;
-        this.usernameValue= this.settingsService.mariUsername;
+        this.usernameValue = this.settingsService.mariUsername;
         this.passwordValue = this.settingsService.mariPassword;
         this.mariProjectServer = this.settingsService.mariServer;
         this.employeeNumberValue = this.settingsService.mariEmployeeNumber;
@@ -53,7 +53,7 @@ export class SetupComponent implements OnInit, AfterViewInit {
 
     public async saveChanges(): Promise<void> {
         this.settingsService.togglApi = this.apiKeyValue;
-        this.settingsService.mariUsername= this.usernameValue;
+        this.settingsService.mariUsername = this.usernameValue;
         this.settingsService.mariPassword = this.passwordValue;
         this.settingsService.mariServer = this.mariProjectServer;
         this.settingsService.mariEmployeeNumber = this.employeeNumberValue;
