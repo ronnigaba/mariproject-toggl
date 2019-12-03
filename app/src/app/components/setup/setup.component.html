@@ -1,0 +1,57 @@
+<div>
+    <br>
+    <div class="container">
+        <div class="container">
+            <div fxLayout="column" fxLayoutGap="20px" fxLayout.gt-md="row" fxLayoutAlign="space-around center"
+                 class="content">
+
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div fxLayout="row" fxLayoutAlign="center center" class="content">
+                <mat-card class="card">
+                    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column" class="card-header">
+                        <h3>Setup</h3>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="card-container">
+                            <div>
+                                <h1>Toggle API key</h1>
+                                <mat-form-field class="input-field">
+                                    <input [(ngModel)]="apiKeyValue" matInput placeholder="API key">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <h1>MARIProject server</h1>
+                                <mat-form-field class="input-field">
+                                    <input [(ngModel)]="mariProjectServer" matInput placeholder="Server">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <h1>MARIProject credentials</h1>
+                                <mat-form-field class="input-field">
+                                    <input [(ngModel)]="employeeNumberValue" matInput placeholder="Employee number">
+                                </mat-form-field>
+                                <br/>
+                                <mat-form-field class="input-field">
+                                    <input [(ngModel)]="usernameValue" matInput placeholder="Username">
+                                </mat-form-field>
+                                <br/>
+                                <mat-form-field class="input-field">
+                                    <input [(ngModel)]="passwordValue" type="password" matInput placeholder="Password">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <mat-chip-list>
+                            <mat-chip color="primary" selected (click)="saveChanges()">Save</mat-chip>
+                            <mat-chip color="accent" selected (click)="testCredentials()">Test</mat-chip>
+                        </mat-chip-list>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
