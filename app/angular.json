@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "mariproject-integration": {
+        "mariproject": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -95,24 +95,24 @@
                 "serve": {
                     "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
-                        "browserTarget": "mariproject-integration:build"
+                        "browserTarget": "mariproject:build"
                     },
                     "configurations": {
                         "dev": {
-                            "browserTarget": "mariproject-integration:build:dev"
+                            "browserTarget": "mariproject:build:dev"
                         },
                         "web": {
-                            "browserTarget": "mariproject-integration:build:web"
+                            "browserTarget": "mariproject:build:web"
                         },
                         "production": {
-                            "browserTarget": "mariproject-integration:build:production"
+                            "browserTarget": "mariproject:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "mariproject-integration:build"
+                        "browserTarget": "mariproject:build"
                     }
                 },
                 "lint": {
@@ -130,7 +130,7 @@
             }
         }
     },
-    "defaultProject": "mariproject-integration",
+    "defaultProject": "mariproject",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",

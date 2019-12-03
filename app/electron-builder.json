@@ -1,8 +1,15 @@
 {
-  "productName": "MARIProject integration",
-  "directories": {
-    "output": "release/"
-  },
+    "productName": "MARIProject integration",
+    "directories": {
+        "output": "release/"
+    },
+    "publish": [
+        {
+            "provider": "github",
+            "owner": "lilbaek",
+            "repo": "mariproject-toggl"
+        }
+    ],
     "files": [
         "**/*",
         "!**/*.ts",
@@ -19,22 +26,19 @@
         "!tsconfig.json",
         "!tslint.json"
     ],
-  "win": {
-    "icon": "dist",
-    "target": [
-      "portable"
-    ]
-  },
-  "mac": {
-    "icon": "dist",
-    "target": [
-      "dmg"
-    ]
-  },
-  "linux": {
-    "icon": "dist",
-    "target": [
-      "AppImage"
-    ]
-  }
+    "win": {
+        "icon": "dist"
+    },
+    "mac": {
+        "icon": "dist",
+        "target": [
+            "dmg"
+        ]
+    },
+    "linux": {
+        "icon": "dist",
+        "target": [
+            "AppImage"
+        ]
+    }
 }
