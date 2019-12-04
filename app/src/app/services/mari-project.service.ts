@@ -91,6 +91,7 @@ export class MariProjectService {
                 ContractPositionID: contractPositionId,
                 ContractID: contractId,
                 DayOfService: date.toISOString(),
+                HoursBillable: 0,
                 Hours: hours,
                 Activity: description
             }
