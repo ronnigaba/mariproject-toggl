@@ -1,4 +1,4 @@
-import {app, BrowserWindow, screen} from 'electron';
+import {app, BrowserWindow, dialog, screen} from 'electron';
 import {autoUpdater} from 'electron-updater';
 import * as path from 'path';
 import * as url from 'url';
@@ -9,12 +9,10 @@ const args = process.argv.slice(1),
 const log = require('electron-log');
 log.transports.file.level = 'info';
 log.transports.console.format = '{h}:{i}:{s} {text}';
-
 log.info('Starting');
 autoUpdater.logger = log;
 // @ts-ignore
-autoUpdater.logger.transports.file.level = 'info';
-
+autoUpdater.logger.transports.file.level = 'debug';
 
 function createWindow(): BrowserWindow {
     log.info('Loading');
@@ -32,6 +30,7 @@ function createWindow(): BrowserWindow {
             allowRunningInsecureContent: true,
         },
     });
+    win.autoHideMenuBar = true;
     if (serve) {
         require('electron-reload')(__dirname, {
             electron: require(`${__dirname}/node_modules/electron`)
@@ -73,8 +72,10 @@ try {
     autoUpdater.on('update-not-available', (info) => {
         sendStatusToWindow('Update not available.');
     });
-    autoUpdater.on('error', (err) => {
-        sendStatusToWindow('Error in auto-updater. ' + err);
+    autoUpdater.on('error', (error) => {
+        console.error('There was a problem updating the application');
+        console.error(error);
+        sendStatusToWindow('Error in auto-updater. ' + error);
     });
     autoUpdater.on('download-progress', (progressObj) => {
         let log_message = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -82,8 +83,19 @@ try {
         log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
         sendStatusToWindow(log_message);
     });
-    autoUpdater.on('update-downloaded', (info) => {
-        sendStatusToWindow('Update downloaded');
+    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+        const dialogOpts = {
+            type: 'info',
+            buttons: ['Restart', 'Later'],
+            title: 'Application Update',
+            message: process.platform === 'win32' ? releaseNotes : releaseName,
+            detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+        };
+        dialog.showMessageBox(dialogOpts).then((returnValue) => {
+            if (returnValue.response === 0) {
+                autoUpdater.quitAndInstall();
+            }
+        });
     });
 } catch (e) {
     log.error(e);
@@ -110,7 +122,7 @@ try {
     });
     try {
         app.on('ready', () => {
-            autoUpdater.checkForUpdatesAndNotify().catch(x =>  {
+            autoUpdater.checkForUpdates().catch(x => {
                 log.error(x);
             });
         });

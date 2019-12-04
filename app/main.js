@@ -13,7 +13,7 @@ log.transports.console.format = '{h}:{i}:{s} {text}';
 log.info('Starting');
 electron_updater_1.autoUpdater.logger = log;
 // @ts-ignore
-electron_updater_1.autoUpdater.logger.transports.file.level = 'info';
+electron_updater_1.autoUpdater.logger.transports.file.level = 'debug';
 function createWindow() {
     log.info('Loading');
     var electronScreen = electron_1.screen;
@@ -30,6 +30,7 @@ function createWindow() {
             allowRunningInsecureContent: true,
         },
     });
+    win.autoHideMenuBar = true;
     if (serve) {
         require('electron-reload')(__dirname, {
             electron: require(__dirname + "/node_modules/electron")
@@ -70,8 +71,10 @@ try {
     electron_updater_1.autoUpdater.on('update-not-available', function (info) {
         sendStatusToWindow('Update not available.');
     });
-    electron_updater_1.autoUpdater.on('error', function (err) {
-        sendStatusToWindow('Error in auto-updater. ' + err);
+    electron_updater_1.autoUpdater.on('error', function (error) {
+        console.error('There was a problem updating the application');
+        console.error(error);
+        sendStatusToWindow('Error in auto-updater. ' + error);
     });
     electron_updater_1.autoUpdater.on('download-progress', function (progressObj) {
         var log_message = 'Download speed: ' + progressObj.bytesPerSecond;
@@ -79,8 +82,19 @@ try {
         log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
         sendStatusToWindow(log_message);
     });
-    electron_updater_1.autoUpdater.on('update-downloaded', function (info) {
-        sendStatusToWindow('Update downloaded');
+    electron_updater_1.autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName) {
+        var dialogOpts = {
+            type: 'info',
+            buttons: ['Restart', 'Later'],
+            title: 'Application Update',
+            message: process.platform === 'win32' ? releaseNotes : releaseName,
+            detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+        };
+        electron_1.dialog.showMessageBox(dialogOpts).then(function (returnValue) {
+            if (returnValue.response === 0) {
+                electron_updater_1.autoUpdater.quitAndInstall();
+            }
+        });
     });
 }
 catch (e) {
@@ -108,7 +122,7 @@ try {
     });
     try {
         electron_1.app.on('ready', function () {
-            electron_updater_1.autoUpdater.checkForUpdatesAndNotify().catch(function (x) {
+            electron_updater_1.autoUpdater.checkForUpdates().catch(function (x) {
                 log.error(x);
             });
         });
