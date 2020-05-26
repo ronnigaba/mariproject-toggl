@@ -26,6 +26,14 @@ export class SettingsService {
         this.set('ToggleApi', value);
     }
 
+    public get autoCheckEntries(): any {
+        return this.get('AutoCheck');
+    }
+
+    public set autoCheckEntries(value: any) {
+        this.set('AutoCheck', value);
+    }
+
     public get mariUsername(): any {
         return this.get('Username');
     }
