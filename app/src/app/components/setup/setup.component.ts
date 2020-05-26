@@ -15,6 +15,7 @@ export class SetupComponent implements OnInit, AfterViewInit {
     public passwordValue: string;
     public mariProjectServer: string;
     public employeeNumberValue: string;
+    public autoCheckEntries: boolean;
 
     constructor(private togglService: TogglService, private mariProjectService: MariProjectService, private settingsService: SettingsService, private snackBar: MatSnackBar) {
     }
@@ -25,6 +26,7 @@ export class SetupComponent implements OnInit, AfterViewInit {
         this.passwordValue = this.settingsService.mariPassword;
         this.mariProjectServer = this.settingsService.mariServer;
         this.employeeNumberValue = this.settingsService.mariEmployeeNumber;
+        this.autoCheckEntries = this.settingsService.autoCheckEntries;
     }
 
     public async testCredentials(): Promise<void> {
@@ -57,6 +59,7 @@ export class SetupComponent implements OnInit, AfterViewInit {
         this.settingsService.mariPassword = this.passwordValue;
         this.settingsService.mariServer = this.mariProjectServer;
         this.settingsService.mariEmployeeNumber = this.employeeNumberValue;
+        this.settingsService.autoCheckEntries = this.autoCheckEntries;
         await this.mariProjectService.setServer(this.mariProjectServer);
         this.snackBar.open('Changes saved', 'Close', {
             duration: 2000,

@@ -65,7 +65,7 @@ export class RegistrationComponent implements OnInit {
                         contractId: contractId,
                         positionId: positionId,
                         id: x.id,
-                        checked: false,
+                        checked: this.settingsService.autoCheckEntries,
                         description: x.description,
                         durationSeconds: x.duration,
                         durationDisplay: date.toISOString().substr(11, 8),
